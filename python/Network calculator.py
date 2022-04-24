@@ -1,4 +1,5 @@
 def net_calc(ip, prefix):
+    
     ip_in = [int(x) for x in ip.split('.')]
     ip_in_bin = [bin(x) for x in ip_in]
 
@@ -36,9 +37,9 @@ def net_calc(ip, prefix):
                 if int(mask_bin[i - 1][j]) == 1:
                     empty_term[j] = 1
                     break
-            next_net = bin(int(next_net_id_bin[i - 1], 2) + int(str(''.join(list(map(str, empty_term)))), 2))
-            next_net_id_bin[i - 1] = next_net
-            first_host_ip_bin[i] = bin(int(first_host_ip_bin[i], 2) + 1)
+    next_net = bin(int(next_net_id_bin[i - 1], 2) + int(str(''.join(list(map(str, empty_term)))), 2))
+    next_net_id_bin[i - 1] = next_net
+    first_host_ip_bin[i] = bin(int(first_host_ip_bin[i], 2) + 1)
         
     next_net_id_int = [int(next_net_id_bin[x], 2) for x in range(len(next_net_id_bin))]
     first_host_ip_int = [int(first_host_ip_bin[x], 2) for x in range(len(first_host_ip_bin))]
