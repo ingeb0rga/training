@@ -42,15 +42,13 @@ def net_calc(ip, prefix):
 
     broadcast_bin = [bin(int(net_id_bin[x], 2) | int(wildcard_mask_bin[x], 2)) for x in range(octets)]
     broadcast_int = [int(broadcast_bin[x], 2) for x in range(octets)]
+
     last_host_ip_bin = [broadcast_bin[x] for x in range(octets)]
     last_host_ip_bin[octets - 1] = bin(int(last_host_ip_bin[octets - 1], 2) - 1)
     last_host_ip_int = [int(last_host_ip_bin[x], 2) for x in range(octets)]
-
-    for k in range(octets -1, -1, -1):
-        first_host_ip_bin = [x for x in net_id_bin]
-        if int(first_host_ip_bin[k], 2) == 0:
-            first_host_ip_bin[k] = bin(int(first_host_ip_bin[k], 2) + 1)
-            break
+   
+    first_host_ip_bin = [x for x in net_id_bin]
+    first_host_ip_bin[octets - 1] = bin(int(first_host_ip_bin[octets - 1], 2) + 1)
     first_host_ip_int = [int(first_host_ip_bin[x], 2) for x in range(octets)]
 
     print("---------------------------------------------")
