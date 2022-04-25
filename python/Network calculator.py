@@ -17,6 +17,19 @@ def net_calc(ip, prefix):
     net_id_int = [int(net_id_bin[x], 2) for x in range(octets)]
     next_net_id_bin = [bin(int(ip_in_bin[x], 2) & int(mask_bin[x], 2)) for x in range(octets)]
 
+    index = -1
+    for i in range(octets - 1, -1, -1):
+        empty_term = [0, 'b', 0, 0, 0, 0, 0, 0, 0, 0]
+        if int(mask_bin[i], 2) != 0:
+            index = i
+            for j in range(bits_per_octet - 1, 1, -1):
+                if int(mask_bin[i][j]) == 1:
+                    empty_term[j] = 1
+                    break
+            break
+    next_net_id_bin[index] = bin(int(next_net_id_bin[i], 2) + int(str(''.join(list(map(str, empty_term)))), 2))
+    next_net_id_int = [int(next_net_id_bin[x], 2) for x in range(octets)]
+
     wildcard_mask = ''        
     for i in range(len(mask)):
         if int(mask[i]) == 0:
@@ -32,19 +45,6 @@ def net_calc(ip, prefix):
     last_host_ip_bin[octets - 1] = bin(int(last_host_ip_bin[octets - 1], 2) - 1)
     last_host_ip_int = [int(last_host_ip_bin[x], 2) for x in range(octets)]
 
-    index = -1
-    for i in range(octets - 1, -1, -1):
-        empty_term = [0, 'b', 0, 0, 0, 0, 0, 0, 0, 0]
-        if int(mask_bin[i], 2) != 0:
-            index = i
-            for j in range(bits_per_octet - 1, 1, -1):
-                if int(mask_bin[i][j]) == 1:
-                    empty_term[j] = 1
-                    break
-            break
-    next_net_id_bin[index] = bin(int(next_net_id_bin[i], 2) + int(str(''.join(list(map(str, empty_term)))), 2))
-    next_net_id_int = [int(next_net_id_bin[x], 2) for x in range(octets)]
-    
     for k in range(octets -1, -1, -1):
         first_host_ip_bin = [x for x in net_id_bin]
         if int(first_host_ip_bin[k], 2) == 0:
