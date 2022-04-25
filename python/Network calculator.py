@@ -17,7 +17,7 @@ def net_calc(ip, prefix):
     net_id_int = [int(net_id_bin[x], 2) for x in range(octets)]
     next_net_id_bin = [bin(int(ip_in_bin[x], 2) & int(mask_bin[x], 2)) for x in range(octets)]
 
-    index = -1
+    index = ''
     for i in range(octets - 1, -1, -1):
         empty_term = [0, 'b', 0, 0, 0, 0, 0, 0, 0, 0]
         if int(mask_bin[i], 2) != 0:
@@ -53,23 +53,24 @@ def net_calc(ip, prefix):
     first_host_ip_int = [int(first_host_ip_bin[x], 2) for x in range(octets)]
 
     print("---------------------------------------------")
-    print('Network_ID: ', end='' )
+    print('Network_ID:\t\t', end='')
     print(*net_id_int, sep='.', end='/')
     print(prefix)
-    print('Mask: ', end='' )
+    print('Mask:\t\t\t', end='')
     print(*mask_int, sep='.', end='\n')
-    print('Wildcart: ', end='' )
+    print('Wildcart:\t\t', end='')
     print(*wildcard_mask_int, sep='.', end='\n')
-    print('Next Network_ID: ', end='' )
+    print('Next Network_ID:\t', end='')
     print(*next_net_id_int, sep='.', end='/')
     print(prefix)
-    print('Broadcast IP: ', end='' )
+    print('Broadcast IP:\t\t', end='')
     print(*broadcast_int, sep='.', end='\n')
-    print('First Host IP: ', end='' )
+    print('First Host IP:\t\t', end='')
     print(*first_host_ip_int, sep='.', end='\n')
-    print('Last Host IP: ', end='' )
+    print('Last Host IP:\t\t', end='')
     print(*last_host_ip_int, sep='.', end='\n')
-    print("IP addresses #:", (2 ** (32 - prefix)) - 2)
+    print('IP addresses #:\t\t', end='')
+    print(2 ** (32 - prefix) - 2)
     print("---------------------------------------------")
         
 net_calc(input("Enter IP: "), int(input("Enter network prefix: ")))
