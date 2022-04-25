@@ -13,6 +13,16 @@ def net_calc(ip, prefix):
 
     mask_bin = [f'0b{int(mask[i:i + 8])}' for i in range(0, len(mask), 8)]
     mask_int = [int(mask_bin[x], 2) for x in range(octets)]
+    
+    wildcard_mask = ''        
+    for i in range(len(mask)):
+        if int(mask[i]) == 0:
+            wildcard_mask += '1'
+        else:
+            wildcard_mask += '0'
+    wildcard_mask_bin = [f'0b{int(wildcard_mask[i:i + 8])}' for i in range(0, len(wildcard_mask), 8)]
+    wildcard_mask_int = [int(wildcard_mask_bin[x], 2) for x in range(octets)]
+
     net_id_bin = [bin(int(ip_in_bin[x], 2) & int(mask_bin[x], 2)) for x in range(octets)]
     net_id_int = [int(net_id_bin[x], 2) for x in range(octets)]
     next_net_id_bin = [bin(int(ip_in_bin[x], 2) & int(mask_bin[x], 2)) for x in range(octets)]
@@ -29,15 +39,6 @@ def net_calc(ip, prefix):
             break
     next_net_id_bin[index] = bin(int(next_net_id_bin[i], 2) + int(str(''.join(list(map(str, empty_term)))), 2))
     next_net_id_int = [int(next_net_id_bin[x], 2) for x in range(octets)]
-
-    wildcard_mask = ''        
-    for i in range(len(mask)):
-        if int(mask[i]) == 0:
-            wildcard_mask += '1'
-        else:
-            wildcard_mask += '0'
-    wildcard_mask_bin = [f'0b{int(wildcard_mask[i:i + 8])}' for i in range(0, len(wildcard_mask), 8)]
-    wildcard_mask_int = [int(wildcard_mask_bin[x], 2) for x in range(octets)]
 
     broadcast_bin = [bin(int(net_id_bin[x], 2) | int(wildcard_mask_bin[x], 2)) for x in range(octets)]
     broadcast_int = [int(broadcast_bin[x], 2) for x in range(octets)]
