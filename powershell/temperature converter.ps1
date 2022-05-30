@@ -1,13 +1,14 @@
-﻿$temp = Read-Host "Значение температуры (C/F)"
+﻿$temp = Read-Host "Введите значение температуры (C/F)"
+Write-Host
 
 if ($temp -match "^[0-9]*C$") {
     [int]$C = $temp.Replace('C', '')
-    $C = ($C * 1.8) + 32
-    Write-Host $C
-    #Write-Host $temp
+    $F = ($F * 1.8) + 32
+    Write-Host $temp" = "$F"F"
+    
 }
 elseif ($temp -match "^[0-9]*F$") {
-    [int]$F = $temp.Replace('F', '')
-    $F = ($F - 32) * 5 / 9
-    Write-Host $F
+    [int]$C = $temp.Replace('F', '')
+    $C = ($C - 32) * 5 / 9
+    Write-Host $temp" = "$C"C"
 }

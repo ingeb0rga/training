@@ -1,8 +1,12 @@
 ﻿$var = Read-Host "Verbose? (y/n)"
-if ($var -match 'y|yes|Yes|Y|YES') {
+
+#Сохраняем начальное состояние $VerbosePreference
+$VerbosePreferenceState = $VerbosePreference
+
+if ($var -match 'y|yes|Y|Yes|YES') {
     $VerbosePreference = 'Continue'
 }
-elseif ($var -match 'n|no|N|NO') {
+elseif ($var -match 'n|no|N|No|NO') {
     $VerbosePreference = 'SilentlyContinue'
 }
 
@@ -32,3 +36,6 @@ Write-Host
 Write-Host "Bubble sorted list:"
 foreach ($s in $list) {Write-Host "$s " -NoNewline -Verbose}
 Write-Host
+
+#Возвращаем первоначальное состояние $VerbosePreference
+$VerbosePreference = $VerbosePreferenceState
