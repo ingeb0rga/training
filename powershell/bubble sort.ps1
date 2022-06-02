@@ -1,4 +1,5 @@
 ﻿$var = Read-Host "Verbose? (y/n)"
+$ArrayLength = Read-Host "Enter the number sequence length"
 
 #Сохраняем начальное состояние $VerbosePreference
 $VerbosePreferenceState = $VerbosePreference
@@ -10,31 +11,31 @@ elseif ($var -match 'n|no|N|No|NO') {
     $VerbosePreference = 'SilentlyContinue'
 }
 
-$list = @()
-for ($i=1; $i -le 20; $i++) {
-    $list += Get-Random -Minimum 1 -Maximum 100
+$sequence = @()
+for ($i=1; $i -le $ArrayLength; $i++) {
+    $sequence += Get-Random -Minimum 1 -Maximum 100
 }
 
 Write-Host
-Write-Host "Initial list:"
-foreach ($s in $list) {Write-Host "$s " -NoNewline}
+Write-Host "Initial sequence:"
+foreach ($i in $sequence) {Write-Host "$i " -NoNewline}
 Write-Host
 
-for ($a=1; $a -lt $list.Length; $a++) {
-    for ($b=0; $b -lt ($list.Length - 1); $b++) {
-        if ($list[$b] -ge $list[$b + 1]) {
-            $temp = $list[$b]
-            $list[$b] = $list[$b + 1]
-            $list[$b + 1] = $temp
+for ($a=1; $a -lt $sequence.Length; $a++) {
+    for ($b=0; $b -lt ($sequence.Length - 1); $b++) {
+        if ($sequence[$b] -ge $sequence[$b + 1]) {
+            $temp = $sequence[$b]
+            $sequence[$b] = $sequence[$b + 1]
+            $sequence[$b + 1] = $temp
         }
-        Write-Verbose "$list"
+        Write-Verbose "$sequence"
         
     }
 }
 
 Write-Host
-Write-Host "Bubble sorted list:"
-foreach ($s in $list) {Write-Host "$s " -NoNewline -Verbose}
+Write-Host "Bubble sorted sequence:"
+foreach ($i in $sequence) {Write-Host "$i " -NoNewline -Verbose}
 Write-Host
 
 #Возвращаем первоначальное состояние $VerbosePreference
