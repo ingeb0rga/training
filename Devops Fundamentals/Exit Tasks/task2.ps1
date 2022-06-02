@@ -1,12 +1,18 @@
-# Get the Path from console
-$path = Read-Host 'Enter the path to accounts.csv, ending with "\" (eg: C:\)'
-# Check if account.csv file is present and get it's content
-if ( (Get-ChildItem -Path $path) -match "accounts.csv") {
-    $accounts = Get-Content -Path $path"accounts.csv" | ConvertFrom-Csv    
-}
-else {
-    Write-Host "File not found. Maybe the wrong path entered.)"
-}
+param(
+    [Parameter(Mandatory)]
+    [string]$path
+)
+# Get the content from account.csv file
+$accounts = Get-Content -Path $path | ConvertFrom-Csv    
+
+# Optional: Get the Path from console, check if account.csv file is present and get it's content
+#$path = Read-Host 'Enter the path to accounts.csv, ending with "\" (eg: C:\)'
+# if ( (Get-ChildItem -Path $path) -match "accounts.csv") {
+#     $accounts = Get-Content -Path $path"accounts.csv" | ConvertFrom-Csv    
+# }
+# else {
+#     Write-Host "File not found. Maybe the wrong path entered.)"
+# }
 
 $hash = @{}     # Hashtable with ID's of equal email addresses
 foreach ($account in $accounts) {
@@ -40,4 +46,7 @@ foreach ($i in $hash.Keys) {
 }
 
 # Save the converted/formatted accounts_new.csv file into the entered Path
-$accounts | ConvertTo-Csv | Set-Content -Path $path"accounts_new.csv"
+$accounts | ConvertTo-Csv | Set-Content -Path $path.Replace('accounts.csv', 'accounts_new.csv')
+
+# Optional save, when reading Path from console
+#$accounts | ConvertTo-Csv | Set-Content -Path $path"accounts_new.csv"
