@@ -18,13 +18,13 @@ param (
     [ValidateScript( {              
         ($_.split('.')[0] -in 0..255) -and ($_.split('.')[1] -in 0..255) -and ($_.split('.')[2] -in 0..255) -and ($_.split('.')[3] -in 0..255) `
         -or ($_ -in 0..32)
-    })]
+    } )]
     [string]$network_mask
 )
 
 # This script needed PSnmap/PSipcalc module to be installed from the PowerShell gallery.
 # (If this module is already installed, please comment the next line of code)
-Install-Module -Name PSnmap -Scope CurrentUser -Force
+# Install-Module -Name PSnmap -Scope CurrentUser -Force
 
 # Cheking if $ip_address_1 and $ip_address_2 hosts are in the same network
 if (Invoke-PSipcalc -NetworkAddress "$ip_address_1/$network_mask" -Contains "$ip_address_2") {
