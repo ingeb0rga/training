@@ -56,7 +56,7 @@ done
 # Formattinging the path to the converted file
 new_file=$(echo $* | sed -e 's|accounts|accounts_new|g')
 
-# Importing line with column titles into converted file
+# Importing raw header line into converted file
 head -n 1 $* > $new_file
 
 # Importing converted data per line into converted file
