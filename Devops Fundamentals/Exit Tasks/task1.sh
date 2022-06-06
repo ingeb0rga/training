@@ -13,7 +13,7 @@ temp_file=$(cat $* | sed -e 's|, |___|g')
 readarray -t arr_id < <(echo "$temp_file" | tail -n +2 | cut -d ',' -f1)
 # Array of "location_id" column
 readarray -t arr_l_id < <(echo "$temp_file" | tail -n +2 | cut -d ',' -f2)
-# Aarray of "name" column, formatted as required ("Name Sirname")
+# Array of "name" column, formatted as required ("Name Sirname")
 readarray -t arr_name < <(echo "$temp_file" | tail -n +2 | cut -d ',' -f3 | sed -e "s/\b\(.\)/\u\1/g")
 # Array of "title" column
 readarray -t arr_title < <(echo "$temp_file" | tail -n +2 | cut -d ',' -f4)
