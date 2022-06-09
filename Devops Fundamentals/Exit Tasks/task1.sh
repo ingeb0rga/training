@@ -17,12 +17,13 @@ readarray -t arr_id < <(echo "$temp_file" | tail -n +2 | cut -d ',' -f1)
 # Array of "location_id" column
 readarray -t arr_l_id < <(echo "$temp_file" | tail -n +2 | cut -d ',' -f2)
 # Array of "name" column, formatted as required ("Name Sirname")
-readarray -t arr_name < <(echo "$temp_file" | tail -n +2 | cut -d ',' -f3 | sed 's|\b\(.\)/|u\1|g')
+# Using sed, first formatting the whole string to lowercase and then the 1st letter of every word to uppercase
+readarray -t arr_name < <(echo "$temp_file" | tail -n +2 | cut -d ',' -f3 | sed 's|\(.*\)|\L\1|;s|\b\(.\)|\u\1|g')
 # Array of "title" column
 readarray -t arr_title < <(echo "$temp_file" | tail -n +2 | cut -d ',' -f4)
 
 # Optional method of getting correct "title" field, if csvkit is installed.
-# No need to replace ", " with "___" at the beginning and at the end of this script
+# No need to replace ", " with "___" at the beginning and at the end of this script (clear code without hardcoding)
 #readarray -t arr_title < <(echo "$temp_file" | tail -n +2 | csvcut -c 4)
 
 # Array of "department" column
@@ -31,9 +32,11 @@ readarray -t arr_dep < <(echo "$temp_file" | tail -n +2 | cut -d ',' -f6)
 # Filling array of "email" column with emails formatted as required
 for (( i=0; i<${#arr_name[@]}; i++ )); do
 # Fist letter of name to lowercase
+# Another method of formatting the 1st letter of word to lowercase with letter index and awk
   first=$(echo ${arr_name[$i]:0:1} | awk '{print tolower($0)}')
 # Sirname to lowercase
-  sirname=$(echo ${arr_name[$i]} | cut -d ' ' -f2 | awk '{print tolower($0)}')
+# Yet another method of formatting to lowercase with tr
+  sirname=$(echo ${arr_name[$i]} | cut -d ' ' -f2 | tr '[:upper:]' '[:lower:]')
 # Adding values into array of "email" column
   arr_email+=( "$first$sirname" )	# Concatenating email (without adding domain and checking for coincidences) and adding to array
 done
@@ -62,7 +65,7 @@ for (( i=0; i<(${#arr_email[@]}); i++ )); do
 done
 
 # Formattinging the path to the converted file
-new_file=$(echo $* | sed 's|accounts|accounts_new|g')
+new_file=$(echo $* | sed 's|accounts|accounts_new|')
 
 # Importing raw header line into converted file
 head -n 1 $* > $new_file

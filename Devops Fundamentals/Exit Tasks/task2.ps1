@@ -14,13 +14,13 @@ $accounts = Get-Content -Path $path | ConvertFrom-Csv
 #     Write-Host "File not found. Wrong path or missing file.)"
 # }
 
-$hash = @{}     # Hashtable with ID's of equal email addresses
+$hash = @{}     # Hashtable with IDs of equal email addresses
 foreach ($account in $accounts) {
-    # Format/update "name" column
+    # Formatting "name" column as required ("Name Sirname")
     $account.name = (Get-Culture).TextInfo.ToTitleCase($account.name)
     # Email generator without adding location_id and domain
     $account.email = ([string]$account.name[0]).ToLower() + (([string]$accounts[$accounts.IndexOf($account)].name).Split(' ')[1]).ToLower()
-    # Finding unique and not unique email addresses
+    # This block will fill make a hashtable with all emails as keys and all IDs as key values
     if ($hash.ContainsKey($account.email)) {
         $hash[$account.email] += @($account.id)
     }
@@ -29,7 +29,7 @@ foreach ($account in $accounts) {
     }
 }
 
-# Formatting not unique email addresses and adding domain
+# Formatting not unique email addresses (adding location_id (where needed) and domain)
 foreach ($i in $hash.Keys) {
     foreach ($j in $hash.$i) {
         if ($hash[$i].Length -eq 1) {       # Check if email address is unique
@@ -41,7 +41,7 @@ foreach ($i in $hash.Keys) {
     }
 }
 
-# Saving the converted/formatted accounts_new.csv file into the entered Path
+# Saving the converted/formatted accounts_new.csv file into the directory with initial Path
 $accounts | ConvertTo-Csv | Set-Content -Path $path.Replace('accounts.csv', 'accounts_new.csv')
 
 # Optional save, if reading Path from console
