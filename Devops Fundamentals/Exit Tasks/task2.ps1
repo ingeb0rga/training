@@ -5,25 +5,21 @@ param(
 # Getting the content from account.csv file
 $accounts = Get-Content -Path $path | ConvertFrom-Csv    
 
-# Optional: Get the Path from console, check if account.csv file is present and get it's content
+# Optional: Get the Path from console, check if account.csv file is present and read it's content
 # $path = Read-Host 'Enter the path to accounts.csv, ending with "\" (eg: C:\)'
 # if ( (Get-ChildItem -Path $path) -match "accounts.csv") {
 #     $accounts = Get-Content -Path $path"accounts.csv" | ConvertFrom-Csv    
 # }
 # else {
-#     Write-Host "File not found. Maybe the wrong path entered.)"
+#     Write-Host "File not found. Wrong path or missing file.)"
 # }
 
 $hash = @{}     # Hashtable with ID's of equal email addresses
 foreach ($account in $accounts) {
     # Format/update "name" column
     $account.name = (Get-Culture).TextInfo.ToTitleCase($account.name)
-    # Email generator
+    # Email generator without adding location_id and domain
     $account.email = ([string]$account.name[0]).ToLower() + (([string]$accounts[$accounts.IndexOf($account)].name).Split(' ')[1]).ToLower()
-        
-    # Optional email generator (without force index incrementation), if ID column is unique and incremented by 1 with every record
-    # $account.email = ([string]$account.name[0]).ToLower() + (([string]$accounts[($account.id - 1)].name).Split(' ')[1]).ToLower()
-    
     # Finding unique and not unique email addresses
     if ($hash.ContainsKey($account.email)) {
         $hash[$account.email] += @($account.id)
@@ -33,7 +29,7 @@ foreach ($account in $accounts) {
     }
 }
 
-# Formatting not unique email addresses and add domain
+# Formatting not unique email addresses and adding domain
 foreach ($i in $hash.Keys) {
     foreach ($j in $hash.$i) {
         if ($hash[$i].Length -eq 1) {       # Check if email address is unique
@@ -48,5 +44,5 @@ foreach ($i in $hash.Keys) {
 # Saving the converted/formatted accounts_new.csv file into the entered Path
 $accounts | ConvertTo-Csv | Set-Content -Path $path.Replace('accounts.csv', 'accounts_new.csv')
 
-# Optional save, when reading Path from console
+# Optional save, if reading Path from console
 # $accounts | ConvertTo-Csv | Set-Content -Path $path"accounts_new.csv"
