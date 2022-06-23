@@ -3,7 +3,7 @@ def net_calc(ip, prefix):
     octets = 4
     bits_per_octet = 10		# Префикс '0b' плюс 8bit
     
-# Преобразуем IP адрес в двоичный  формат
+# Преобразуем IP адрес в двоичный формат
     ip_in = [int(x) for x in ip.split('.')]
     ip_in_bin = [bin(x) for x in ip_in]
 
@@ -84,5 +84,6 @@ def net_calc(ip, prefix):
     print(2 ** (32 - prefix) - 2)
     print("---------------------------------------------")
 
-# Вызываем функцию        
-net_calc(input("Enter IP: "), int(input("Enter network prefix: ")))
+# Вызываем функцию
+if __name__ == "__main__":
+    net_calc(input("Enter IP: "), int(input("Enter network prefix: ")))
