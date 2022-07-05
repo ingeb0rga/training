@@ -1,0 +1,41 @@
+---
+  - hosts: all
+    tasks:
+
+    - name: ping
+      ping:
+
+    - name: file details
+      find:
+        path: /vagrant
+        file_type: file
+
+    - name: (ubuntu) ntp install
+      become: yes
+      apt:
+        name: ntp
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: (centos) ntp install
+      become: yes
+      yum:
+        name: ntp
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: (ubuntu) start and enable ntp service
+      become: yes
+      service:
+        name: ntp
+        state: started
+        enabled: no
+      when: ansible_os_family == "Debian"
+
+    - name: (ubuntu) start and enable ntp service
+      become: yes
+      service:
+        name: ntpd
+        state: started
+        enabled: no
+      when: ansible_os_family == "RedHat"
