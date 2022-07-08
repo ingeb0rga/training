@@ -1,0 +1,5 @@
+﻿# Method idempotent
+ansible all -m setup -a 'filter=*distrib*,kernel' | jq -r '.plays[].tasks[].hosts[] | "OS:\n\(.ansible_facts["ansible_distribution"])\n\(.ansible_facts["ansible_distribution_version"])\nKernel:\n\(.ansible_facts["ansible_kernel"])"'
+
+# Method simple
+ansible all -m shell -a "hostnamectl | grep -E 'System|Kernel' | sed 's/^.*: //g'" | jq -r '.plays[].tasks[].hosts[] | "OS:\n\(.stdout_lines[0])\nKernel:\n\(.stdout_lines[1])"'

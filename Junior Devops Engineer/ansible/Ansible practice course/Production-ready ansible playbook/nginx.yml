@@ -1,0 +1,63 @@
+---
+  - hosts: all
+    become: yes
+    vars:
+      pkg_state: latest
+      your_name: Andrei Sviryd
+
+    tasks:
+    
+    - name: Install packages
+      package:
+        name: nginx
+        state: '{{pkg_state}}'
+
+    - name: Start and enable nginx
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+      register: service_state
+
+    - name: Add line with my name to index.html (Debian)
+      lineinfile:
+        path: /var/www/html/index.nginx-debian.html
+        line: '{{your_name}}'
+      when: ansible_os_family == "Debian"
+
+    - name: Add line with my name to index.html (RedHat)
+      lineinfile:
+        path: /usr/share/nginx/html/index.html
+        line: '{{your_name}}'
+      when: ansible_os_family == "RedHat"
+
+# Verification block
+
+    - name: Check if port 80 is listening
+      wait_for:
+        port: 80
+        delay: 1
+        timeout: 3
+      register: port_check
+      ignore_errors: yes
+
+    - name: Check if my name is in index.html (Debian)
+      lineinfile:
+        path: /var/www/html/index.nginx-debian.html
+        line: '{{your_name}}'
+      when: ansible_os_family == "Debian"
+      check_mode: yes
+      register: name_state
+
+    - name: Check if my name is in index.html (RedHat)
+      lineinfile:
+        path: /usr/share/nginx/html/index.html
+        line: '{{your_name}}'
+      when: ansible_os_family == "RedHat"
+      check_mode: yes
+      register: name_state
+
+    - name: Error message
+      debug:
+        msg: "Something wrong. Maybe nginx is not started, or 80 port is not listening, or your name is absent in the index.html page"
+      when: service_state.state != "started" or port_check.failed != false or name_state.changed != false
