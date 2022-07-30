@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Create a bucket and enable versioning
 aws s3 mb s3://<unique_bucket_name>
 aws s3api put-bucket-versioning --bucket <unique_bucket_name> --versioning-configuration Status=Enabled

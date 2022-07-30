@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Create a CodeBuild service role
 aws iam create-role --role-name CodeBuildServiceRole --assume-role-policy-document file://./roles/create-role.json
 ws iam put-role-policy --role-name CodeBuildServiceRole --policy-name CodeBuildServiceRolePolicy --policy-document file://./roles/put-role-policy.json

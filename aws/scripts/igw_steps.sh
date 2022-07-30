@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Creat igw with tags
 ws ec2 create-internet-gateway --tag-specifications 'ResourceType=internet-gatewy,Tags=[{Key=Name,Value=<name>}]'
 
