@@ -1,0 +1,68 @@
+apiVersion:  networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-rules
+spec:
+  rules:
+    - host: main
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: main
+              port:
+                number: 80
+
+    - host: web1
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: web1
+              port:
+                number: 80
+
+    - host: web2
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: web2
+              port:
+                number: 80
+
+    - host: tomcat
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: tomcat
+              port:
+                number: 8080
+
+    # - host: web1
+    #   http:
+    #     paths:
+    #       - pathbackend:
+    #           serviceName: web1
+    #           servicePort: 80
+    # - host: web2
+    #   http:
+    #     paths:
+    #       - backend:
+    #           serviceName: web2
+    #           servicePort: 80
+    # - host: tomcat
+    #   http:
+    #     paths:
+    #       - backend:
+    #           serviceName: tomcat
+    #           servicePort: 8080

@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-web-deployment-autoscaling
+  labels:
+    app : my-k8s-deployment
+spec:
+  selector:
+    matchLabels:
+      app: zyx
+  template:
+    metadata:
+      labels:
+        app: zyx      # Service will look for these PODs labels
+    spec:
+      containers:
+        - name  : zyx-web
+          image : ingeb0rga/myk8sapp
+          ports :
+            - containerPort: 80
+
+---
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: my-web-deployment-autoscaling
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: my-web-deployment-autoscaling
+  minReplicas: 4
+  maxReplicas: 6
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      targetAverageUtilization: 70
+      # target:
+      #   type: Utilization
+      #   averageUtilization: 70
+      # - name: memory
+      #   target:
+      #     type: Utilization
+      #     averageUtilization: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-autoscaling-pod-service
+  labels:
+    env   : prod
+    owner : spirt
+spec:
+  type: LoadBalancer
+  selector:
+    app: zyx                # Selecting PODs with these labels
+  ports:
+    - name      : zyx-app-listener
+      protocol  : TCP
+      port      : 80        # Port on LB
+      targetPort: 80        # Port on POD

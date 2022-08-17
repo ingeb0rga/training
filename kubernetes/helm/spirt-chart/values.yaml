@@ -1,0 +1,4 @@
+container:
+  image: ingeb0rga/myk8sapp
+
+replicaCount: 2

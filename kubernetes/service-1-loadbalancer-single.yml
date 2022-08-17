@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-web-deployment
+  labels:
+    app: my-k8s-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: kgb
+  template:
+    metadata:
+      labels:
+        app: kgb      # Service will look for these PODs labels
+    spec:
+      containers:
+        - name  : kgb-web
+          image : ingeb0rga/myk8sapp
+          ports :
+            - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spirt-single-pod-service
+  labels:
+    env: prod
+    owner: spirt
+spec:
+  selector:
+    app: kgb          # Selecting PODs with these labels
+  ports:
+    - name: app-listener
+      protocol: TCP
+      port: 80        # Port on LB
+      targetPort: 80  # Port on POD
+  type: LoadBalancer
