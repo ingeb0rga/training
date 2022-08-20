@@ -1,6 +1,0 @@
-[submodule "ansible_"]
-	path = ansible_
-	url = https://github.com/ingeb0rga/ansible.git
-[submodule "ansible"]
-	path = ansible
-	url = https://github.com/ingeb0rga/ansible.git
