@@ -28,7 +28,7 @@ resource "azurerm_lb_backend_address_pool" "devops" {
 resource "azurerm_lb_probe" "devops" {
   loadbalancer_id = azurerm_lb.devops.id
   name            = "ssh-running-probe"
-  port            = var.application_port
+  port            = 22
 }
 
 resource "azurerm_lb_rule" "lbnatrule" {
