@@ -1,14 +1,3 @@
-# data "azurerm_network_security_group" "devops" {
-#   name = "devops-vm2NSG"
-#   resource_group_name = var.azurerm_resource_group
-# }
-
-# data "azurerm_subnet" "devops" {
-#   name = "subnet1"
-#   resource_group_name = var.azurerm_resource_group
-#   virtual_network_name = var.azurerm_virtual_network
-# }
-
 resource "azurerm_public_ip" "devops" {
   # name                = var.public_ip_name
   name                = "pub_ip_${var.vm_name}"
@@ -43,11 +32,6 @@ resource "azurerm_network_interface_security_group_association" "devops" {
     azurerm_network_interface.devops
   ]
 }
-
-# data "azurerm_network_interface" "devops" {
-#   name                = "devops-nic"
-#   resource_group_name = data.azurerm_resource_group.devops.name
-# }
 
 resource "azurerm_linux_virtual_machine" "terraform" {
   name                = var.vm_name

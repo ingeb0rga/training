@@ -24,10 +24,10 @@ variable "storage_account_type" {
   default = "Standard_LRS"
 }
 
-variable "public_ip_name" {
-  default = "devops-terraformvmPublicIP"
-}
+# variable "public_ip_name" {
+#   default = "devops-terraformvmPublicIP"
+# }
 
-variable "nic_name" {
-  default = "devops-nic"
-}
+# variable "nic_name" {
+#   default = "devops-nic"
+# }
