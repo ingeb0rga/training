@@ -7,10 +7,3 @@ provider "registry.terraform.io/hashicorp/azurerm" {
     "h1:DfQtILx+kjaSiNt6JzOyUpJ0PlQOw85GG0CxKBUtsgQ=",
   ]
 }
-
-provider "registry.terraform.io/hashicorp/random" {
-  version = "3.4.3"
-  hashes = [
-    "h1:xZGZf18JjMS06pFa4NErzANI98qi59SEcBsOcS2P2yQ=",
-  ]
-}

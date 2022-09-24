@@ -10,14 +10,16 @@
 # }
 
 resource "azurerm_public_ip" "devops" {
-  name                = var.public_ip_name
+  # name                = var.public_ip_name
+  name                = "pub_ip_${var.vm_name}"
   resource_group_name = var.rg_name
   location            = var.location
   allocation_method   = "Dynamic"  
 }
 
 resource "azurerm_network_interface" "devops" {
-  name                = var.nic_name
+  # name                = var.nic_name
+  name                = "nic-${var.vm_name}"
   resource_group_name = var.rg_name
   location            = var.location
 
@@ -27,11 +29,19 @@ resource "azurerm_network_interface" "devops" {
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.devops.id
   }
+
+  depends_on = [
+    azurerm_public_ip.devops
+  ]
 }
 
 resource "azurerm_network_interface_security_group_association" "devops" {
   network_interface_id      = azurerm_network_interface.devops.id
   network_security_group_id = var.nsg_id
+
+  depends_on = [
+    azurerm_network_interface.devops
+  ]
 }
 
 # data "azurerm_network_interface" "devops" {
@@ -78,5 +88,8 @@ resource "azurerm_linux_virtual_machine" "terraform" {
       l_name  = "spirt",
       names   = ["Bob", "Dan", "Max"]
   }))
-  
+
+  depends_on = [
+    azurerm_network_interface_security_group_association.devops
+  ]
 }
