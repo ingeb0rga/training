@@ -9,7 +9,7 @@ variable "location" {
 variable "tags" {
    description = "Map of the tags to use for the resources that are deployed"
    default = {
-      owner       = "devops"
-      environment = "dev"
+      owner = "devops"
+      env   = "dev"
    }
 }
