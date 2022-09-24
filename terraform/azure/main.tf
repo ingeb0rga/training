@@ -110,6 +110,7 @@ module "vm1" {
   vnet        = module.vnet.vnet_name
   subnet_id   = module.vnet.subnet_id
   nsg_id      = module.nsg.nsg_id
+  tags        = var.tags
 }
 
 output "public_ip1" {
@@ -124,6 +125,10 @@ module "vm2" {
   vnet        = module.vnet.vnet_name
   subnet_id   = module.vnet.subnet_id
   nsg_id      = module.nsg.nsg_id
+  tags        = {
+    owner = "devops"
+    env   = "stag"
+  }
 }
 
 output "public_ip2" {
@@ -138,6 +143,10 @@ module "vm3" {
   vnet        = module.vnet.vnet_name
   subnet_id   = module.vnet.subnet_id
   nsg_id      = module.nsg.nsg_id
+  tags        = {
+    owner = "devops"
+    env   = "prod"
+  }  
 }
 
 output "public_ip3" {

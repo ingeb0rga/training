@@ -66,12 +66,14 @@ resource "azurerm_linux_virtual_machine" "terraform" {
   network_interface_ids = [azurerm_network_interface.devops.id]
 
   # custom_data = filebase64("customdata.tpl")
-  custom_data = base64encode(templatefile("./modules/vm/customdata3.tpl", 
-  {
-      f_name  = "devops",
-      l_name  = "spirt",
-      names   = ["Bob", "Dan", "Max"]
-  }))
+  # custom_data = base64encode(templatefile("./customdata3.tpl", 
+  # {
+  #     f_name  = "devops",
+  #     l_name  = "spirt",
+  #     names   = ["Bob", "Dan", "Max"]
+  # }))
+
+  tags = var.tags
 
   depends_on = [
     azurerm_network_interface_security_group_association.devops

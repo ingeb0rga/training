@@ -8,6 +8,8 @@ variable "subnet_id" {}
 
 variable "nsg_id" {}
 
+variable "tags" {}
+
 variable "vm_name" {
   default = "terraformvm"
 }
