@@ -33,3 +33,28 @@ variable "storage_account_type" {
 # variable "nic_name" {
 #   default = "devops-nic"
 # }
+
+# variable "source_image_reference" {
+#   default = {
+#   publisher = "OpenLogic"
+#   offer     = "CentOS"
+#   sku       = "7.5"
+#   version   = "latest"
+#   }
+# }
+
+variable "publisher" {
+  default = "Canonical"
+}
+
+variable "offer" {
+  default = "UbuntuServer"
+}
+
+variable "sku" {
+  default = "18.04-LTS"
+}
+
+variable "sku_version" {
+  default = "latest"
+}

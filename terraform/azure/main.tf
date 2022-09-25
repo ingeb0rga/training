@@ -102,10 +102,11 @@ output "nsg_id" {
 
 #-------------------------------------
 
-module "vm1" {
+module "ubuntu" {
+  count       = 2
   source      = "./modules/vm"
   location    = var.location
-  vm_name     = "terraformvm1"
+  vm_name     = "ubuntuvm${count.index + 1}"
   rg_name     = module.resourcegroup.rg_name
   vnet        = module.vnet.vnet_name
   subnet_id   = module.vnet.subnet_id
@@ -113,44 +114,48 @@ module "vm1" {
   tags        = var.tags
 }
 
-output "public_ip1" {
-  value = module.vm1.public_ip
+output "public_ips_ubuntu" {
+  value = ["${module.ubuntu.*.public_ip}"]
 }
 
-module "vm2" {
+# module "vm2" {
+#   source      = "./modules/vm"
+#   location    = var.location
+#   vm_name     = "terraformvm2"
+#   rg_name     = module.resourcegroup.rg_name
+#   vnet        = module.vnet.vnet_name
+#   subnet_id   = module.vnet.subnet_id
+#   nsg_id      = module.nsg.nsg_id
+#   tags        = {
+#     owner = "devops"
+#     env   = "stag"
+#   }
+# }
+
+# output "public_ip2" {
+#   value = module.vm2.public_ip
+# }
+
+module "centos" {
+  count       = 1
   source      = "./modules/vm"
   location    = var.location
-  vm_name     = "terraformvm2"
+  vm_name     = "centosvm${count.index + 1}"
   rg_name     = module.resourcegroup.rg_name
   vnet        = module.vnet.vnet_name
   subnet_id   = module.vnet.subnet_id
   nsg_id      = module.nsg.nsg_id
-  tags        = {
-    owner = "devops"
-    env   = "stag"
-  }
-}
-
-output "public_ip2" {
-  value = module.vm2.public_ip
-}
-
-module "vm3" {
-  source      = "./modules/vm"
-  location    = var.location
-  vm_name     = "terraformvm3"
-  rg_name     = module.resourcegroup.rg_name
-  vnet        = module.vnet.vnet_name
-  subnet_id   = module.vnet.subnet_id
-  nsg_id      = module.nsg.nsg_id
+  publisher   = "OpenLogic"
+  offer       = "CentOS"
+  sku         = "7.5"
   tags        = {
     owner = "devops"
     env   = "prod"
   }  
 }
 
-output "public_ip3" {
-  value = module.vm3.public_ip
+output "public_ips_centos" {
+  value = ["${module.centos.*.public_ip}"]
 }
 
 #-------------------------------------

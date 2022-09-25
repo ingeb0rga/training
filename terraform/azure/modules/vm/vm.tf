@@ -56,11 +56,11 @@ resource "azurerm_linux_virtual_machine" "terraform" {
   # version   = "latest"
   # }
 
-  source_image_reference {
-  publisher = "Canonical"
-  offer     = "UbuntuServer"
-  sku       = "18.04-LTS"
-  version   = "latest"
+  source_image_reference  {
+    publisher = var.publisher
+    offer     = var.offer
+    sku       = var.sku
+    version   = var.sku_version
   }
 
   network_interface_ids = [azurerm_network_interface.devops.id]
