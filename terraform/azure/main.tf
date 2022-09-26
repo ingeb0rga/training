@@ -148,6 +148,7 @@ module "centos" {
   publisher   = "OpenLogic"
   offer       = "CentOS"
   sku         = "7.5"
+  sku_version = "latest"
   tags        = {
     owner = "devops"
     env   = "prod"

@@ -1,0 +1,66 @@
+---
+- name: Install nginx and upload webpage
+  hosts: all
+  become: true
+
+  vars:
+    source_file: ./site/index.html
+    destination_dir_ubuntu: /var/www/html
+    destination_dir_centos: /usr/share/nginx/html
+
+  tasks:
+
+    - name: RedHat
+      block:
+
+        - name: Install epel-release centos
+          yum:
+            update_cache: true
+            name: epel-release
+            state: present
+
+        - name: Install nginx centos
+          yum:
+            update_cache: true
+            name: nginx
+            state: present
+
+        - name: Copy new homepage centos
+          copy:
+            src: "{{ source_file }}"
+            dest: "{{ destination_dir_centos }}"
+            mode: 0644
+          notify: Restart nginx
+
+      when: ansible_os_family == "RedHat"
+
+    - name: Debian
+      block:
+
+        - name: Install nginx ubuntu
+          apt:
+            update_cache: true
+            name: nginx
+            state: present
+
+        - name: Copy new homepage ubuntu
+          copy:
+            src: "{{ source_file }}"
+            dest: "{{ destination_dir_ubuntu }}"
+            mode: 0644
+
+          notify: Restart nginx
+
+      when: ansible_os_family == "Debian"
+
+    - name: Start and enable nginx
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+  handlers:
+    - name: Restart nginx
+      service:
+        name: nginx
+        state: restarted

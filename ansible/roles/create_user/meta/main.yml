@@ -1,0 +1,12 @@
+galaxy_info:
+  author: Andrey Sviryd
+  description: Create user with ssh authentication
+
+  license: license (GPL-2.0-or-later, MIT, etc)
+
+  min_ansible_version: 2.1
+
+  galaxy_tags: [user, admin]
+
+dependencies: []
+

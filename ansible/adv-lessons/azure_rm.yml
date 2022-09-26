@@ -1,0 +1,15 @@
+---
+  plugin: azure_rm
+  include_vm_resource_groups:
+    - test
+  auth_source: auto
+  conditional_groups:
+    all_the_hosts: true
+    ubuntu: "'Ubuntu' in image.offer"
+    centos: "'CentOS' in image.offer"
+  keyed_groups:
+    - key: tags.env
+      separator: ""
+  # hostvar_expressions:
+    # ansible_user: "'spirt'"
+

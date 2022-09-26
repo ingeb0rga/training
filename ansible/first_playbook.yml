@@ -1,0 +1,41 @@
+---
+  - hosts: all
+    tasks:
+
+    - name: "ping"
+      ping:
+
+    - name: "file details"
+      find:
+        path: /vagrant
+        file_type: file
+
+  - hosts: web
+    become: yes
+    tasks:
+
+    - name: "ntp install"
+      apt:
+        name: ntp
+        state: present
+
+    - name: "ubuntu ntp start and enable"
+      service:
+        name: ntp
+        state: started
+        enabled: no
+
+  - hosts: db
+    become: yes
+    tasks:
+
+    - name: "ntp install"
+      yum:
+        name: ntp
+        state: present
+
+    - name: "centos ntp start and enable"
+      service:
+        name: ntpd
+        state: started
+        enabled: no

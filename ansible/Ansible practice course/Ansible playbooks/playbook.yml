@@ -1,0 +1,27 @@
+---
+  - hosts: all
+    connection: local
+    become: yes
+    vars:
+      pkg_state: latest
+
+    tasks:
+    
+    - name: Install packages
+      package:
+        name: [curl,wget]
+        state: '{{pkg_state}}'
+
+    # Optional method:
+    
+    # - name: Install packages
+    #   yum:
+    #     name: [curl,wget]
+    #     state: '{{pkg_state}}'
+    #   when: ansible_os_family == "RedHat"
+
+    # - name: Install packages
+    #   apt:
+    #     name: [curl,wget]
+    #     state: '{{pkg_state}}'
+    #   when: ansible_os_family == "Debian"

@@ -1,0 +1,38 @@
+---
+- name: Variables lesson
+  hosts: all
+  become: yes
+
+  vars:
+    message1: Hi
+    message2: world
+    secret: FL":KJFOHN:FHF"GUI
+
+  tasks:
+
+    - name: Print secret var
+      debug:
+        var: secret
+
+    - name: Print message
+      debug:
+        msg: "Secret is: {{ secret }}"
+
+    - name: Print owner var
+      debug:
+        msg: "Owner is {{ owner }} and the global owner is {{ global_owner }}"
+
+    - name: Concatenated vars
+      set_fact:
+        full_message="{{ message1 }}, {{ message2 }} from {{ owner }}"
+
+    - name: Print concatenated vars
+      debug:
+        var: full_message
+
+    - name: Print hosts vars
+      debug:
+        msg:
+          - "{{ ansible_kernel }}"
+          - "{{ ansible_os_family }}"
+          - "{{ ansible_distribution }}"

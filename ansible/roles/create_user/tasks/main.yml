@@ -1,0 +1,49 @@
+---
+# tasks file for user_create
+- name: Check if user exists
+  getent:
+    database: passwd
+    key: "{{user_name}}"
+    fail_key: False
+
+# - name: hello
+#   debug:
+#     msg: "hello"
+#   when: '{{getent_passwd}} != "{{user_name}}: null"'
+
+- name: Create user on remote Ubuntu host
+  become: yes
+  user:
+    name: '{{user_name}}'
+    state: '{{user_state}}'
+    remove: yes
+    shell: /bin/bash
+    groups: sudo
+    append: yes
+  when: 'ansible_os_family == "Debian" and "null" not in getent_passwd'
+
+- name: Create user on remote Centos host
+  become: yes
+  user:
+    name: '{{user_name}}'
+    state: '{{user_state}}'
+    remove: yes
+    shell: /bin/bash
+    groups: wheel
+    append: yes
+  when: 'ansible_os_family == "RedHat" and "null" not in getent_passwd'
+
+- name: Publish local ssh public key for remote login
+  become: yes
+  authorized_key:
+    user: '{{user_name}}'
+    state: '{{user_state}}'
+    key: "{{ lookup('file', '{{ssh_key}}') }}"
+  when: '"null" not in getent_passwd'
+
+- name: Add bashrc to include host and user
+  become: yes
+  template:
+    dest: '~{{user_name}}/.bashrc'
+    src: templates/bashrc.j2    
+  when: '"null" not in getent_passwd'

@@ -1,0 +1,14 @@
+---
+  - hosts: all
+    become: yes
+    tasks:
+    
+    - name: update all packages - this is like running the 'yum update' command
+      yum:
+        name: "*"
+        state: latest
+      
+    - name: "httpd install"
+      yum:
+        name: httpd
+        state: present

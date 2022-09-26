@@ -1,0 +1,26 @@
+---
+  - hosts: azvm2
+    become: yes
+    tasks:
+    
+    - name: Disable SELinux
+      ansible.posix.selinux:
+        state: disabled
+    
+    - name: update all packages - this is like running the 'yum update' command
+      yum:
+        name: "*"
+        state: latest
+        skip_broken: yes
+      
+    - name: "httpd install"
+      yum:
+        name: httpd
+        state: present
+
+    - name: "httpd start and enable"
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+      tags: http_start
