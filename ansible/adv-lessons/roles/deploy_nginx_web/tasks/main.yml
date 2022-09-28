@@ -1,0 +1,62 @@
+---
+# tasks file for deploy_nginx_web
+
+- name: RedHat
+  block:
+
+    - name: Install epel-release centos
+      yum:
+        update_cache: true
+        name: epel-release
+        state: present
+
+    - name: Install nginx centos
+      yum:
+        update_cache: true
+        name: nginx
+        state: present
+      notify: Start and enable nginx
+
+    - name: Copy new homepage files centos
+      copy:
+        src: "{{ item }}"
+        dest: "{{ dest_dir_centos }}"
+        mode: 0644
+      with_fileglob: "*.jpg"
+      notify: Restart and enable nginx
+
+    - name: Generate and copy index.html centos
+      template:
+        src: "index.j2"
+        dest: "{{ dest_dir_centos }}/index.html"
+        mode: 0644
+      notify: Restart and enable nginx
+
+  when: ansible_os_family == "RedHat"
+
+- name: Debian
+  block:
+
+    - name: Install nginx ubuntu
+      apt:
+        update_cache: true
+        name: nginx
+        state: present
+      notify: Start and enable nginx
+
+    - name: Copy new homepage files ubuntu
+      copy:
+        src: "{{ item }}"
+        dest: "{{ dest_dir_ubuntu }}"
+        mode: 0644
+      with_fileglob: "*.jpg"
+      notify: Restart and enable nginx
+
+    - name: Generate and copy index.html ubuntu
+      template:
+        src: "index.j2"
+        dest: "{{ dest_dir_ubuntu }}/index.html"
+        mode: 0644
+      notify: Restart and enable nginx
+
+  when: ansible_os_family == "Debian"

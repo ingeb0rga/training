@@ -1,0 +1,5 @@
+---
+# defaults file for deploy_nginx_web
+
+dest_dir_ubuntu: /var/www/html
+dest_dir_centos: /usr/share/nginx/html

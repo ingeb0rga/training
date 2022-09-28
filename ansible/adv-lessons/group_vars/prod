@@ -1,2 +1,3 @@
 ---
+ansible_user: spirt
 owner: spirt_prod

@@ -2,11 +2,12 @@
 - name: Install nginx and upload webpage
   hosts: all
   become: true
+  # gather_facts: no
 
   vars:
-    source_file: ./site/index.html
-    destination_dir_ubuntu: /var/www/html
-    destination_dir_centos: /usr/share/nginx/html
+    src_dir: ./site2
+    dest_dir_ubuntu: /var/www/html
+    dest_dir_centos: /usr/share/nginx/html
 
   tasks:
 
@@ -26,10 +27,18 @@
             state: present
           notify: Start and enable nginx
 
-        - name: Copy new homepage centos
+        - name: Copy new homepage files centos
           copy:
-            src: "{{ source_file }}"
-            dest: "{{ destination_dir_centos }}"
+            src: "{{ item }}"
+            dest: "{{ dest_dir_centos }}"
+            mode: 0644
+          with_fileglob: "{{ src_dir }}/*.jpg"
+          notify: Restart and enable nginx
+
+        - name: Generate and copy index.html centos
+          template:
+            src: "{{ src_dir }}/index.j2"
+            dest: "{{ dest_dir_centos }}/index.html"
             mode: 0644
           notify: Restart and enable nginx
 
@@ -45,12 +54,19 @@
             state: present
           notify: Start and enable nginx
 
-        - name: Copy new homepage ubuntu
+        - name: Copy new homepage files ubuntu
           copy:
-            src: "{{ source_file }}"
-            dest: "{{ destination_dir_ubuntu }}"
+            src: "{{ item }}"
+            dest: "{{ dest_dir_ubuntu }}"
             mode: 0644
+          with_fileglob: "{{ src_dir }}/*.jpg"
+          notify: Restart and enable nginx
 
+        - name: Generate and copy index.html ubuntu
+          template:
+            src: "{{ src_dir }}/index.j2"
+            dest: "{{ dest_dir_ubuntu }}/index.html"
+            mode: 0644
           notify: Restart and enable nginx
 
       when: ansible_os_family == "Debian"

@@ -1,3 +1,4 @@
 ---
+ansible_user: spirt
 global_owner: spirt
 ansible_user: spirt

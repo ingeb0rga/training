@@ -4,9 +4,9 @@
   become: true
 
   vars:
-    source_file: ./site/index.html
-    destination_dir_ubuntu: /var/www/html
-    destination_dir_centos: /usr/share/nginx/html
+    src_dir: ./site2
+    dest_dir_ubuntu: /var/www/html
+    dest_dir_centos: /usr/share/nginx/html
 
   tasks:
 
@@ -28,9 +28,10 @@
 
         - name: Copy new homepage centos
           copy:
-            src: "{{ source_file }}"
-            dest: "{{ destination_dir_centos }}"
+            src: "{{ item }}"
+            dest: "{{ dest_dir_centos }}"
             mode: 0644
+          with_fileglob: "{{ src_dir }}/*.*"
           notify: Restart and enable nginx
 
       when: ansible_os_family == "RedHat"
@@ -47,10 +48,10 @@
 
         - name: Copy new homepage ubuntu
           copy:
-            src: "{{ source_file }}"
-            dest: "{{ destination_dir_ubuntu }}"
+            src: "{{ item }}"
+            dest: "{{ dest_dir_ubuntu }}"
             mode: 0644
-
+          with_fileglob: "{{ src_dir }}/*.*"
           notify: Restart and enable nginx
 
       when: ansible_os_family == "Debian"

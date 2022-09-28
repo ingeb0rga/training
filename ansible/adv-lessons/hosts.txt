@@ -1,9 +1,2 @@
-[linux]
-vm1	ansible_host=40.114.198.105
-vm2	ansible_host=40.113.122.252
-vm3	ansible_host=40.114.194.153
-
-[linux:vars]
-ansible_user=spirt
-# ansible_ssh_private_key=/path
-
+[all]
+localhost ansible_connection=local

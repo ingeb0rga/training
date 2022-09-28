@@ -1,0 +1,9 @@
+---
+- name: Install nginx and upload webpage
+  hosts: all
+  # any_errors_fatal: true
+  become: true
+  # gather_facts: no
+
+  roles:
+    - { role: deploy_nginx_web, when: ansible_system == 'Linux' }
