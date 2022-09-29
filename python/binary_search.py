@@ -1,5 +1,14 @@
 import random
 
+start = int(input("Enter min number: "))
+stop = int(input("Enter max number: "))
+limit = int(input("Enter the length of the list (should be less, then max number): "))
+
+my_list = random.sample(range(start, stop), limit)
+my_list.sort()
+
+number = int(input("Enter number: "))
+
 def binary_search(list, number, min, max):
     if min > max:
         return False
@@ -11,12 +20,6 @@ def binary_search(list, number, min, max):
             return binary_search(my_list, number, min, (mid - 1))
         else:
             return binary_search(my_list, number, (mid + 1), max)
-
-my_list = random.sample(range(  int(input("Enter min number: ")),
-                                int(input("Enter max number: "))),
-                                int(input("Enter the length of the list (should be less, then max number): ")))
-my_list.sort()
-number = int(input("Enter number: "))
 
 result = binary_search(my_list, number, 0, len(my_list))
 

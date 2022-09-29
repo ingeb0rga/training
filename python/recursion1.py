@@ -50,7 +50,7 @@ print(sum(990))
 #     a, b = 0, 1
 #     for n in range(x):
 #         a, b = b, a + b
-#     return a, b
+#     return a
 
 
 # print(fibbo(int(input("Enter number: "))))
