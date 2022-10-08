@@ -7,15 +7,15 @@
 
 # privet(5)
 
-def sum(x):
-    if x == 0:
-        return 0
-    elif x == 1:
-        return 1
-    else:
-        return (x + sum(x - 1))
+# def sum(x):
+#     if x == 0:
+#         return 0
+#     elif x == 1:
+#         return 1
+#     else:
+#         return (x + sum(x - 1))
 
-print(sum(990))
+# print(sum(990))
 
 # def factorial(n):
 #     if n < 0:
@@ -27,15 +27,15 @@ print(sum(990))
 
 # print(factorial(int(input("Enter number: "))))
 
-# def fibbo(i):
-#     if i == 0:
-#         return 0
-#     elif i == 1:
-#         return 1
-#     else:
-#         return (fibbo(i - 1) + fibbo(i - 2))
+def fibbo(i):
+    if i == 0:
+        return 0
+    elif i == 1:
+        return 1
+    else:
+        return (fibbo(i - 1) + fibbo(i - 2))
 
-# print(fibbo(int(input("Enter number: "))))
+print(fibbo(int(input("Enter number: "))))
 
 # def fibbo(n):
 #     a, b = 0, 1

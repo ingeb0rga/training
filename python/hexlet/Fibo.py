@@ -5,4 +5,4 @@ def fib(x):
         a, b = b, a + b
     return a
 
-print(fib(45))
+print(fib(2000000))
