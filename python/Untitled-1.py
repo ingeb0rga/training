@@ -1,15 +1,8 @@
-import pickle
- 
-FILENAME = "user.dat"
- 
-name = "Tom"
-age = 19
- 
-with open(FILENAME, "wb") as file:
-    pickle.dump(name, file)
-    pickle.dump(age, file)
- 
-with open(FILENAME, "rb") as file:
-    name = pickle.load(file)
-    age = pickle.load(file)
-    print("Имя:", name, "\tВозраст:", age)
+from datetime import datetime
+from datetime import date
+from datetime import time
+# import datetime
+
+# print(datetime.now())
+today = date.today()
+print("%s.%s.%s" % (today.day, today.month, today.year))

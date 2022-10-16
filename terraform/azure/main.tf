@@ -102,21 +102,21 @@ output "nsg_id" {
 
 #-------------------------------------
 
-module "ubuntu" {
-  count       = 2
-  source      = "./modules/vm"
-  location    = var.location
-  vm_name     = "ubuntuvm${count.index + 1}"
-  rg_name     = module.resourcegroup.rg_name
-  vnet        = module.vnet.vnet_name
-  subnet_id   = module.vnet.subnet_id
-  nsg_id      = module.nsg.nsg_id
-  tags        = var.tags
-}
+# module "ubuntu" {
+#   count       = 1
+#   source      = "./modules/vm"
+#   location    = var.location
+#   vm_name     = "ubuntuvm${count.index + 1}"
+#   rg_name     = module.resourcegroup.rg_name
+#   vnet        = module.vnet.vnet_name
+#   subnet_id   = module.vnet.subnet_id
+#   nsg_id      = module.nsg.nsg_id
+#   tags        = var.tags
+# }
 
-output "public_ips_ubuntu" {
-  value = ["${module.ubuntu.*.public_ip}"]
-}
+# output "public_ips_ubuntu" {
+#   value = ["${module.ubuntu.*.public_ip}"]
+# }
 
 # module "vm2" {
 #   source      = "./modules/vm"
@@ -136,28 +136,28 @@ output "public_ips_ubuntu" {
 #   value = module.vm2.public_ip
 # }
 
-module "centos" {
-  count       = 1
-  source      = "./modules/vm"
-  location    = var.location
-  vm_name     = "centosvm${count.index + 1}"
-  rg_name     = module.resourcegroup.rg_name
-  vnet        = module.vnet.vnet_name
-  subnet_id   = module.vnet.subnet_id
-  nsg_id      = module.nsg.nsg_id
-  publisher   = "OpenLogic"
-  offer       = "CentOS"
-  sku         = "7.5"
-  sku_version = "latest"
-  tags        = {
-    owner = "devops"
-    env   = "prod"
-  }  
-}
+# module "centos" {
+#   count       = 1
+#   source      = "./modules/vm"
+#   location    = var.location
+#   vm_name     = "centosvm${count.index + 1}"
+#   rg_name     = module.resourcegroup.rg_name
+#   vnet        = module.vnet.vnet_name
+#   subnet_id   = module.vnet.subnet_id
+#   nsg_id      = module.nsg.nsg_id
+#   publisher   = "OpenLogic"
+#   offer       = "CentOS"
+#   sku         = "7.5"
+#   sku_version = "latest"
+#   tags        = {
+#     owner = "devops"
+#     env   = "prod"
+#   }  
+# }
 
-output "public_ips_centos" {
-  value = ["${module.centos.*.public_ip}"]
-}
+# output "public_ips_centos" {
+#   value = ["${module.centos.*.public_ip}"]
+# }
 
 #-------------------------------------
 
