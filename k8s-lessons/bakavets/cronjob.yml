@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: hello
+spec:
+  schedule: "*/1 * * * *"
+  # startingDeadlineSeconds: 60
+  concurrencyPolicy: Forbid
+  # successfulJobsHistoryLimit: 2
+  # failedJobsHistoryLimit: 2
+  # suspend: false
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      # activeDeadlineSeconds: 240
+      # parallelism: 2
+      # completions: 2
+      template:
+        spec:
+          containers:
+          - name: hello
+            image: busybox
+            imagePullPolicy: IfNotPresent
+            command:
+              - bin/sh
+              - -c
+              # - date; echo "Hello from k8s"; exit $((RANDOM%2))
+              - date; echo "Hello from k8s"; sleep 400            
+          restartPolicy: OnFailure

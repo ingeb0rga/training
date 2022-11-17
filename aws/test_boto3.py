@@ -1,7 +1,7 @@
 from sre_parse import State
 import boto3, re, json, sys, yaml
 
-# s3 = boto3.resource('s3')
+s3 = boto3.resource('s3')
 ec2 = boto3.resource('ec2')
 ec2client = boto3.client('ec2')
 cw = boto3.client('cloudwatch')
@@ -17,8 +17,8 @@ alarms = cw.describe_alarms()
 #     for response in paginator.paginate():
 #         print(json.dumps(response['Metrics'], indent = 4))
 
-# for bucket in s3.buckets.all():
-#     print("Bucket name:", bucket.name)
+for bucket in s3.buckets.all():
+    print("Bucket name:", bucket.name)
 
 # for id in sys.argv[1:]:
 #     print(id)
@@ -52,15 +52,15 @@ alarms = cw.describe_alarms()
 
 # cw.delete_alarms(AlarmNames=['Demo_Web_Server_CPU_Utilization'])
 
-for instance in ec2.instances.all():
+# for instance in ec2.instances.all():
     # if instance.state['Name'] == "running":
     #     instance.stop()
         # print(instance)
         # print(instance.state['Name'])
-    for tag in instance.tags:
-        if re.search(r'devops', tag['Value']):
-            if instance.state['Name'] == "running":
-                instance.stop()
+    # for tag in instance.tags:
+    #     if re.search(r'devops', tag['Value']):
+    #         if instance.state['Name'] == "running":
+    #             instance.stop()
                 # print(instance.id)
                 # print(instance.instance_id)
                 # print(tag['Value'])

@@ -10,4 +10,4 @@ aws ec2 create-route-table --vpc-id <vpc-id> --tag-specifications 'ResourceType=
 aws ec2 associate-route-table --route-table-id <rtb-id> --subnet-id <subnet-id>
 
 # Add route through internet gateway
-ws ec2 create-route --route-table-id <rtb-id> --destination-cidr-block <0.0.0.0/0> --gateway-id <igw-id>
+aws ec2 create-route --route-table-id <rtb-id> --destination-cidr-block <0.0.0.0/0> --gateway-id <igw-id>

@@ -14,7 +14,7 @@ for aa in "${a[@]}"; do
                 if ! echo "${res[@]}" | grep -q "$cc"; then
                     res+=("$cc")
                 fi
-        fi    
+	        fi    
         done
     done
 done
