@@ -1,0 +1,27 @@
+---
+- name: Install and run web servers
+  hosts: all
+  become: yes
+
+  tasks:
+
+    - name: Remove apache
+      apt:
+        update_cache: no
+        name:
+          - apache2
+        state: absent
+
+    - name: Install nginx
+      apt:
+        update_cache: yes
+        name:
+          - nginx
+          - mc
+        state: present
+
+    - name: Start and enable nginx
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: yes

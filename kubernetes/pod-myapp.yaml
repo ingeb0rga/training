@@ -10,11 +10,11 @@ metadata:
 spec:
   containers:
     - name: container-apache
-      image: httpd
+      image: nginx
       ports:
         - containerPort: 80
 
-    - name: container-tomcat
-      image: tomcat
-      ports:
-        - containerPort: 8080
+    # - name: container-tomcat
+    #   image: tomcat
+    #   ports:
+    #     - containerPort: 8080

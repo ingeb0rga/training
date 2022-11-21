@@ -1,0 +1,9 @@
+---
+- name: Ping hosts
+  hosts: all
+  # become: yes
+  # become_user: ec2-user
+
+  tasks:
+    - name: Ping
+      ping:
