@@ -27,13 +27,11 @@ def main():
     for row in range(1, sheet_sf.max_row):
         if sheet_sf[f"B{row}"].value == 1:
             sheet_sf_begin = row + 1   # The first line of goods list in TDSheet sheet
-            print(sheet_sf_begin) 
             break
 
     for row in range(sheet_sf_begin, sheet_sf.max_row):
         if "Всего к оплате" in sheet_sf[f"B{row}"].value:
             sheet_sf_end = row  # The last line of goods list in TDSheet sheet
-            print(sheet_sf_end)
             break
 
     # Insterting gtds from gtd sheet into TDSheet sheet
