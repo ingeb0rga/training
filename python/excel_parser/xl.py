@@ -19,7 +19,8 @@ def main():
             del uniq_goods[k]
 
     for row in range(17, sheet_sf.max_row):
-        if sheet_sf[f'B{row}'].value == "Всего к оплате":
+        # if sheet_sf[f'B{row}'].value == "Всего к оплате":
+        if "Всего к оплате" in sheet_sf[f'B{row}'].value:
             sheet_sf_end = row
             break
 
