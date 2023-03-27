@@ -1,0 +1,27 @@
+- `main.tf` - contains main module resources
+- `security_group.tf` - contains security group and security group rule resources (e.g. `aws_security_group` `aws_security_group_rule`)
+- `interface.tf` - contains network interface resources (e.g. `aws_network_interface`, `aws_network_interface_attachment`)
+- `route.tf` - contains route resources (e.g `aws_route_table`, `aws_route`)
+- `network.tf` - contains VPC and subnet resources (e.g `aws_subnet`, `aws_vpc`)
+- `load_balancer.tf` - contains load balancer resources (e.g. `aws_elb`, `aws_lb`)
+- `listener.tf` - contains load balancer listener resources (e.g. `aws_lb_listener`, `aws_lb_listener_rule`)
+- `target_group.tf` - contains target group resources (e.g. `aws_lb_target_group`, `aws_lb_target_group_attachment`)
+- `autoscaling_group.tf` - contains Auto Scaling Groups resources (e.g `aws_autoscaling_group`, `aws_autoscaling_attachment`)
+- `iam.tf` - contains IAM resources (e.g. `aws_iam_policy`, `aws_iam_user`)
+- `iam_policies.tf` - contains IAM policies (e.g. `aws_iam_policy_document`)
+- `acm.tf` - contains ACM resources (e.g. `aws_acm_certificate`, `aws_acm_certificate_validation`)
+- `s3.tf` - contains S3 resources (e.g. `aws_s3_bucket`, `aws_s3_bucket_policy`)
+- `route53.tf` - contains route53 resources (e.g. `aws_route53_zone`, `aws_route_53_record`)
+- `providers.tf` - contains providers
+- `locals.tf` - contains local variables
+- `variables.tf` - contains terraform variables which is used in the module
+- `*-providers.tf` - contains common terraform providers (e.g. `env-providers.tf`)
+- `*-locals.tf` - contains common terraform local variables (e.g. `tenant-locals.tf`)
+- `*-variables.tf` - contains common terraform variables (e.g. `tenant-variables.tf`)
+- `*-datasources.tf` - contains common terraform data sources (e.g. `env-datasources.tf`)
+- `datasources.tf` - contains terraform data sources
+- `outputs.tf` - contains module outputs
+- `amis.tf` - contains AMI data sources (e.g. `aws_ami`, `aws_ami_ids`)
+- `templates.tf` - contains template data sources (e.g. `template_file`, `template_cloudinit_config`)
+- `README.md` - contains module documentation
+- `tfvars/*.tfvars` - for modules that were reworked to be tf-general-less, these files contain variable definitions for specific module instance(s); the name is composed as ${env}_${tenant}_${module_name}.tfvars (see tf-cisco-csr module as an example)
