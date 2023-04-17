@@ -70,6 +70,8 @@ def main():
     for row in range(sf_begin, sf_end):
         if sf[f"B{row}"].value in uniq_goods:
             sf.cell(row=row, column=32).value = uniq_goods[sf[f"B{row}"].value]["gtd_num"]
+        elif sf[f"B{row}"].value not in uniq_goods and sf[f"B{row}"].value not in notuniq_goods:
+            sf.cell(row=row, column=32).value = "!!!!! ТОВАР НЕ НАЙДЕН !!!!!"
         else:
             for key, val in notuniq_goods[sf[f"B{row}"].value].items():
                 if (
